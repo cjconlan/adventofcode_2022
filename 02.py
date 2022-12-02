@@ -48,4 +48,8 @@ scores.clear()
 for line in data:
     p1, p2 = line.strip().split(' ')
     p2 = get_play(LOOKUP[p1], p2)
-    scores.append(results[(LOOKUP[p1], p2)])
+    scores.append(results[(LOOKUP[p1], p2)]
+
+sum(scores)
+
+
