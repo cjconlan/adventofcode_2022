@@ -18,11 +18,11 @@ def get_priority(char):
         return ord(char) - ord('a')+1
     return ord(char) - ord('A')+27
 
-def get_char(input):
+def get_char(str_input):
    # Get the common character between the ist and 2nd halves of a list
-   idx = len(input)/2
-   for char in input[idx:]:
-      if char in input[:idx]:
+   idx = int(len(str_input)/2)
+   for char in str_input[idx:]:
+      if char in str_input[:idx]:
           return char
 
 sum = 0
