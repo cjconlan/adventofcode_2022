@@ -42,7 +42,7 @@ def get_common(nested_list):
     for char in nested_list[0].strip():
         if all([char in sublist.strip() for sublist in nested_list[1:]]):
             return char
-            
+ 
 sum = 0
 for group in group_data:
     char = get_common(group)
