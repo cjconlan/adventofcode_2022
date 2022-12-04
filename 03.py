@@ -29,8 +29,9 @@ sum = 0
 for line in data:
     common = get_char(line.strip())
     val = get_priority(common)
-    print(val)
     sum += val
+
+print(sum)
 
 
 # Part 2
@@ -46,3 +47,5 @@ sum = 0
 for group in group_data:
     char = get_common(group)
     sum += get_priority(char)
+
+print(sum)
