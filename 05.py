@@ -73,3 +73,23 @@ for line in move_data:
  
 res = ''.join((stacks[stack]['stack_items'][-1] for stack in stacks))
 # CFFHVVHNC
+
+# Part 2
+# Create the data again and run as follows
+
+line_num = 0
+for line in move_data:
+    if not line: continue
+    line_num += 1
+    ser = pd.Series(line.split())
+    indexes = [1, 3, 5]  # 'move 2 from 4 to 2'
+    line_data = ser[indexes]
+    qty, src, dst = line_data
+    c = 0
+    popped = list(reversed([stacks[src]['stack_items'].pop() for _ in range(int(qty))]))
+    stacks[dst]['stack_items'].extend(popped)
+
+res = ''.join((stacks[stack]['stack_items'][-1] for stack in stacks))
+# FSZWBPTBG
+
+
