@@ -7,6 +7,7 @@ import os
 data = pathlib.Path('/tmp/data7')
 
 def create_root():
+    # create an empty fake root filesystem
     root = pathlib.Path('/tmp/fsroot_advent7')
     if root.exists():
         # Cleanup/start over
@@ -16,10 +17,12 @@ def create_root():
 
 
 def create_fs():
+    #nTraverse the input data and create folders and files as required.
     cwd = ['/']
     for line in data.read_text().splitlines():
         if not line: continue
         if line.startswith('$'):
+            # Use this line to find (and remmeber) what the last command to run was.
             prompt, cmd, *args = line.split()
             args = ' '.join(args)
             if cmd == 'cd':
@@ -38,15 +41,17 @@ def create_fs():
                 continue
         else:
             # Use cwd to know where we are
-            fld = root / '/'.join(cwd[1:])
+            fld = root / '/'.join(cwd[1:])  # Current folder name
             if cmd == 'ls':
                 info, name = line.split()
                 if info == 'dir':
+                    # Create the folder if it doesn't exist
                     folder = name
                     this_fld = fld / folder
                     if not this_fld.exists():
                         this_fld.mkdir()
                 else:
+                    # Create the file if it doesn't exist
                     size = int(info)
                     filename = name
                     this_file = this_fld = fld / filename
