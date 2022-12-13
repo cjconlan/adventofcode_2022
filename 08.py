@@ -1,6 +1,9 @@
 # 08
 
+import pathlib
 import itertools
+
+p = pathlib.Path('data/08.txt')
 
 all_trees = {}
 max_x = 0
@@ -50,32 +53,36 @@ total_visible = perimeter_trees + visible
 
 # Part 2
 def get_scenic_score(tree):
-    # Not working yet!
     x, y = tree
-    up = list(((x, y) for y in range(min_y, y)))
+    # Up and Left need to go from big to small numbers, so needs reversing.
+    up = list(((x, y) for y in reversed(range(min_y, y))))
     down = list(((x, y) for y in range(y + 1, max_y + 1)))
-    left = list(((x, y) for x in range(min_x, x)))
+    left = list(((x, y) for x in reversed(range(min_x, x))))
     right = list(((x, y) for x in range(x + 1, max_x + 1)))
     sights = []
     for check in (up, down, left, right):
-        check = list(check)
-        # get the sight score for all the way to the edge
-        sight = [int(all_trees[tree]) - int(all_trees[coord]) for coord in check]
-        # Remove sight scores for anything after 0
-        sight_new = list()
-        for val in sight:
+        # Get the sight score for all the way to the edge
+        # Find the height difference between our tree and all the ones to the edgs
+        sight_all = [int(all_trees[tree]) - int(all_trees[coord]) for coord in check]
+        # Remove sight scores for anything after 0 or negative
+        # ie. Remove all trees after we reach one our same height or taller
+        sight = list()
+        for val in sight_all:
             if val <= 0:
-                sight_new.append(val)
+                sight.append(val)
                 break
             else:
-                sight_new.append(val)
-        sights.append(len(sight_new))
-    print(sights)
+                sight.append(val)
+        # Add the qty of trees in our view in each direction
+        sights.append(len(sight))
+    # Multiple the sight scores together
     score = 1
     for val in sights:
         score = score * val
     return score
 
-
+# Get the maximum scenic score.
 max([get_scenic_score(tree) for tree in trees_to_check])
+#517440
+
 
